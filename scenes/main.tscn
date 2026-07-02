@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bw6dxqekhybth"]
+
+[ext_resource type="PackedScene" uid="uid://cjl51jxvk5c5m" path="res://scenes/units/pawn.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://matbq3vlj76u" path="res://scenes/camera_3d.gd" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://cq5r0k01l05ku" path="res://scenes/resource.tscn" id="3_sugp2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qli"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_0wfyh"]
+material = SubResource("StandardMaterial3D_o5qli")
+size = Vector3(7.4312744, 1, 9.085022)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o5qli"]
+size = Vector3(7.073303, 0.9321289, 8.946411)
+
+[node name="Main" type="Node3D" unique_id=1674497327]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=302450973]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2053686626]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.96551514, 0, -1.9789124)
+mesh = SubResource("BoxMesh_0wfyh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1755940706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.94277954, 0.033935547, -1.8685913)
+shape = SubResource("BoxShape3D_o5qli")
+
+[node name="Pawn" parent="." unique_id=1202909473 instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=888493479 node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.70710677, 0, -0.70710677, 0.7071067, 0, 3, 3)
+script = ExtResource("2_0wfyh")
+target = NodePath("../Pawn")
+
+[node name="Resource" parent="." unique_id=1774678447 instance=ExtResource("3_sugp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
