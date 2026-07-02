@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export var speed: float = 5.0
 
 @onready var _sprite: AnimatedSprite3D = $AnimatedSprite3D
+@onready var _interaction_area: Area3D = $InteractionArea
 
 var _gravity: float = 9.8
 
