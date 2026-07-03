@@ -9,7 +9,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=582137528]
-billboard = 2
+billboard = 1
 texture = ExtResource("1_ca17w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1271823760]

@@ -10,10 +10,10 @@ shading_mode = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_0wfyh"]
 material = SubResource("StandardMaterial3D_o5qli")
-size = Vector3(7.4312744, 1, 9.085022)
+size = Vector3(32.207672, 1, 32.645393)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o5qli"]
-size = Vector3(7.073303, 0.9321289, 8.946411)
+size = Vector3(32.32936, 0.9321289, 32.67691)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_selbox"]
 transparency = 1
@@ -30,11 +30,11 @@ collision_layer = 8
 collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2053686626]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.96551514, 0, -1.9789124)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.055160522, 0, -3.5395012)
 mesh = SubResource("BoxMesh_0wfyh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1755940706]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.94277954, 0.033935547, -1.8685913)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06539154, 0.033935547, -3.4774017)
 shape = SubResource("BoxShape3D_o5qli")
 
 [node name="Pawn" parent="." unique_id=1202909473 groups=["units"] instance=ExtResource("1_o5qli")]
