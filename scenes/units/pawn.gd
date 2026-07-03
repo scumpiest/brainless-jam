@@ -1,11 +1,27 @@
 extends CharacterBody3D
 
+class_name Pawn
+
 @export var speed: float = 5.0
 
 @onready var _sprite: AnimatedSprite3D = $AnimatedSprite3D
 @onready var _interaction_area: Area3D = $InteractionArea
 
 var _gravity: float = 9.8
+
+
+func _ready() -> void:
+	add_to_group("units")
+
+
+func select() -> void:
+	# TODO: add selection outline
+	_sprite.modulate = Color.BLUE
+
+
+func deselect() -> void:
+	# TODO: remove selection outline
+	_sprite.modulate = Color.WHITE
 
 
 func _physics_process(delta: float) -> void:
