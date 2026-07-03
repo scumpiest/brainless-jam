@@ -49,6 +49,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5066583, 1, 0)
 [node name="Pawn4" parent="." unique_id=110123638 groups=["units"] instance=ExtResource("1_o5qli")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 0)
 
+[node name="Pawn5" parent="." unique_id=1164454496 groups=["units"] instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1076784, 1, 0.7575321)
+
+[node name="Pawn6" parent="." unique_id=449736899 groups=["units"] instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 1.1366267)
+
+[node name="Pawn7" parent="." unique_id=648851183 groups=["units"] instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.72909915, 1, 0)
+
+[node name="Pawn8" parent="." unique_id=1188629022 groups=["units"] instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8277593, 1, 0)
+
+[node name="Pawn9" parent="." unique_id=445885134 groups=["units"] instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 2.0377855, 0)
+
+[node name="Pawn10" parent="." unique_id=1317228989 groups=["units"] instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 2.2308621)
+
 [node name="Camera3D" type="Camera3D" parent="." unique_id=888493479 node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.70710677, 0, -0.70710677, 0.7071067, 0, 3, 3)
 script = ExtResource("2_0wfyh")

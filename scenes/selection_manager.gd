@@ -18,6 +18,16 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# right click to move units to the clicked position
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			var ground_hits := _mouse_to_ground(event.position)
+			if ground_hits.is_empty():
+				return
+			_issue_move_command(ground_hits[0])
+			return
+
+	# left click to select units in a box
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
@@ -92,3 +102,15 @@ func deselect_all() -> void:
 func _refresh_selection_in_box() -> void:
 	deselect_all()
 	select_units_in_box()
+
+
+# TODO: move all selected units to the target position in a formation
+func _issue_move_command(target_pos: Vector3) -> void:
+	var center := Vector3.ZERO
+	for unit in selected_units:
+		center += unit.global_position
+	center /= selected_units.size()
+	for unit in selected_units:
+		var offset := unit.global_position - center
+		offset.y = 0.0
+		unit.move_to(target_pos + offset)
