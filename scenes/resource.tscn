@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cq5r0k01l05ku"]
+
+[ext_resource type="Texture2D" uid="uid://3tmh2xjawv3k" path="res://assets/temp/Gold Stone 6.png" id="1_ca17w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bhunq"]
+
+[node name="Resource" type="Area3D" unique_id=1774678447]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=582137528]
+billboard = 1
+texture = ExtResource("1_ca17w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1271823760]
+shape = SubResource("BoxShape3D_bhunq")
