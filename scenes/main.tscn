@@ -4,7 +4,10 @@
 [ext_resource type="Script" uid="uid://c867p3j2t6itx" path="res://scenes/level.gd" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://matbq3vlj76u" path="res://scenes/camera_3d.gd" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://cq5r0k01l05ku" path="res://scenes/resource.tscn" id="3_sugp2"]
+[ext_resource type="Resource" uid="uid://bnaon71x7sikp" path="res://resources/UnitData/Melee.tres" id="3_tipki"]
+[ext_resource type="Resource" uid="uid://pfsplf04nugm" path="res://resources/UnitData/Miner.tres" id="4_85g3d"]
 [ext_resource type="Script" uid="uid://554rf3x0hi34" path="res://scenes/selection_manager.gd" id="4_selmgr"]
+[ext_resource type="Resource" uid="uid://bdb6hhyd1fcx" path="res://resources/UnitData/Ranged.tres" id="5_choun"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qli"]
 shading_mode = 0
@@ -44,33 +47,27 @@ shape = SubResource("BoxShape3D_o5qli")
 
 [node name="Unit" parent="." unique_id=1202909473 groups=["units"] instance=ExtResource("1_o5qli")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+unit_data = ExtResource("3_tipki")
 
 [node name="Unit2" parent="." unique_id=827023094 groups=["units"] instance=ExtResource("1_o5qli")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49024928, 1, 0.8476963)
+unit_data = ExtResource("4_85g3d")
 
 [node name="Unit3" parent="." unique_id=1409745222 groups=["units"] instance=ExtResource("1_o5qli")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5066583, 1, 0)
+unit_data = ExtResource("5_choun")
 
 [node name="Unit4" parent="." unique_id=110123638 groups=["units"] instance=ExtResource("1_o5qli")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 0)
+unit_data = ExtResource("4_85g3d")
 
 [node name="Unit5" parent="." unique_id=1164454496 groups=["units"] instance=ExtResource("1_o5qli")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1076784, 1, 0.7575321)
+unit_data = ExtResource("3_tipki")
 
 [node name="Unit6" parent="." unique_id=449736899 groups=["units"] instance=ExtResource("1_o5qli")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 1.1366267)
-
-[node name="Unit7" parent="." unique_id=648851183 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.72909915, 1, 0)
-
-[node name="Unit8" parent="." unique_id=1188629022 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8277593, 1, 0)
-
-[node name="Unit9" parent="." unique_id=445885134 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 2.0377855, 0)
-
-[node name="Unit10" parent="." unique_id=1317228989 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 2.2308621)
+unit_data = ExtResource("5_choun")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=888493479 node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.70710677, 0, -0.70710677, 0.7071067, 0, 3, 3)

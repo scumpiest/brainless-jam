@@ -2,12 +2,24 @@ extends CharacterBody3D
 
 class_name Unit
 
+enum UnitClass { MELEE, RANGED, MINER }
+
+@export var unit_data: UnitData
 @export var speed: float = 5.0
 @export var stop_distance: float = 0.5
 
 @onready var _sprite: AnimatedSprite3D = $AnimatedSprite3D
 @onready var _interaction_area: Area3D = $InteractionArea
 
+# Stats
+var max_hp: float
+var current_hp: float
+var attack_range: float
+var attack_speed: float
+var attack_damage: float
+#var upgrade_slots: Array[UpgradeData] = []
+
+# Steering
 var _steering_behaviours: Array[SteeringBehaviour] = []
 var _commander: Commander
 
@@ -19,6 +31,14 @@ var _has_move_target: bool = false
 
 func _ready() -> void:
 	add_to_group("units")
+	_apply_sprite_frames()
+
+
+func _apply_sprite_frames() -> void:
+	if unit_data == null or unit_data.animation_sprite_frames == null:
+		return
+	_sprite.sprite_frames = unit_data.animation_sprite_frames
+	_sprite.play("idle")
 
 
 func select() -> void:
