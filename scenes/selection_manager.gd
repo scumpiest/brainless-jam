@@ -6,7 +6,7 @@ var is_dragging: bool = false
 var start_position: Vector3 = Vector3(0, ground_y, 0)
 var end_position: Vector3 = Vector3(0, ground_y, 0)
 
-var selected_units: Array[Pawn] = []
+var selected_units: Array[Unit] = []
 
 var _camera: Camera3D
 @onready var _box_visual: MeshInstance3D = $BoxVisual

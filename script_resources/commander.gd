@@ -6,7 +6,7 @@ var speed: float = 5.0
 var level: Level
 var pathfinding_grid: AStarGrid2D
 
-var _troops: Array[Pawn] = []
+var _troops: Array[Unit] = []
 var _troopsClose: bool = false
 
 var _path: Array[Vector2i]
@@ -114,7 +114,7 @@ func _process(delta: float) -> void:
 
 func _update_troops() -> void:
 	_troopsClose = true
-	for troop: Pawn in _troops:
+	for troop: Unit in _troops:
 		troop._move_target = position
 		troop._has_move_target = true
 		if (troop.position - position).length_squared() > _maxTroopDistance:

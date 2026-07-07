@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cjl51jxvk5c5m"]
 
 [ext_resource type="Texture2D" uid="uid://b7kjuevp83k2g" path="res://assets/temp/Pawn_Idle.png" id="1_2lw0w"]
-[ext_resource type="Script" uid="uid://cxvt4yu2p5qn0" path="res://scenes/units/pawn.gd" id="1_pawn"]
+[ext_resource type="Script" uid="uid://cxvt4yu2p5qn0" path="res://scenes/units/unit.gd" id="1_unit"]
 [ext_resource type="Texture2D" uid="uid://cmgl4pithxuef" path="res://assets/temp/Pawn_Run Gold.png" id="2_xbl4s"]
 [ext_resource type="Texture2D" uid="uid://ckya2nhlvp26e" path="res://assets/temp/Pawn_Interact Pickaxe.png" id="3_fbw5j"]
 [ext_resource type="Texture2D" uid="uid://cy81fwg144auo" path="res://assets/temp/Pawn_Run.png" id="3_mhp1l"]
@@ -216,9 +216,9 @@ height = 1.3095703
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_bhunq"]
 
-[node name="Pawn" type="CharacterBody3D" unique_id=1202909473]
+[node name="Unit" type="CharacterBody3D" unique_id=1202909473]
 collision_mask = 12
-script = ExtResource("1_pawn")
+script = ExtResource("1_unit")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=900481361]
 billboard = 1

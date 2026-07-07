@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-class_name Pawn
+class_name Unit
 
 @export var speed: float = 5.0
 @export var stop_distance: float = 0.5
