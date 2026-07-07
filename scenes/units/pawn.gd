@@ -8,6 +8,9 @@ class_name Pawn
 @onready var _sprite: AnimatedSprite3D = $AnimatedSprite3D
 @onready var _interaction_area: Area3D = $InteractionArea
 
+var _steering_behaviours: Array[SteeringBehaviour] = []
+var _commander: Commander
+
 var _gravity: float = 9.8
 
 var _move_target: Vector3
@@ -37,6 +40,13 @@ func _physics_process(delta: float) -> void:
 	if _has_move_target:
 		var to_target := _move_target - global_position
 		to_target.y = 0.0
+		
+		var dirAdjustment: Vector2 = Vector2() 
+		for behaviour: SteeringBehaviour in _steering_behaviours:
+			dirAdjustment += behaviour.calc_direction(self) # TODO: get nodes from commander
+		
+		to_target += Vector3(dirAdjustment.x, 0, dirAdjustment.y)
+		
 		if to_target.length() <= stop_distance:
 			_has_move_target = false
 			velocity.x = move_toward(velocity.x, 0.0, speed)
@@ -63,3 +73,10 @@ func move_to(target: Vector3) -> void:
 	_move_target.y = global_position.y # keep the same height
 	_has_move_target = true
 
+
+func commander_registered(commander: Commander) -> void:
+	_commander = commander
+	_steering_behaviours.clear()
+	if _commander:
+		_steering_behaviours.push_back(_commander.get_behaviour(SteeringBehaviour.BehaviourType.Separation))
+		_steering_behaviours.push_back(_commander.get_behaviour(SteeringBehaviour.BehaviourType.Avoidance))

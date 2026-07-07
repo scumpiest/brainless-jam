@@ -12,9 +12,17 @@ var _camera: Camera3D
 @onready var _box_visual: MeshInstance3D = $BoxVisual
 
 
+@export var _level: Level
+var _tmpCommander: Commander = Commander.new()
+
+
 func _ready() -> void:
 	_camera = get_viewport().get_camera_3d()
 	_box_visual.visible = false
+	assert(_level)
+	_tmpCommander.level = _level
+	_tmpCommander.pathfinding_grid = _level._grid
+	add_child(_tmpCommander)
 
 
 func _input(event: InputEvent) -> void:
@@ -106,11 +114,18 @@ func _refresh_selection_in_box() -> void:
 
 # TODO: move all selected units to the target position in a formation
 func _issue_move_command(target_pos: Vector3) -> void:
+	_tmpCommander.clear_troops()
+
 	var center := Vector3.ZERO
 	for unit in selected_units:
 		center += unit.global_position
+		_tmpCommander.register(unit)
+
 	center /= selected_units.size()
-	for unit in selected_units:
-		var offset := unit.global_position - center
-		offset.y = 0.0
-		unit.move_to(target_pos + offset)
+	_tmpCommander.position = center
+	_tmpCommander.set_target(Vector2(target_pos.x, target_pos.z))
+	
+#	for unit in selected_units:
+#		var offset := unit.global_position - center
+#		offset.y = 0.0
+#		unit.move_to(target_pos + offset)

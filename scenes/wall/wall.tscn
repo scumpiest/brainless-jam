@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ccddlns33lxnm"]
+
+[ext_resource type="Script" uid="uid://ecduqcqbrjf7" path="res://scenes/wall/wall.gd" id="1_toau8"]
+[ext_resource type="Texture2D" uid="uid://jru0m4usbtyy" path="res://assets/temp/TreeSet.png" id="2_toau8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t8knd"]
+
+[node name="Wall" type="Area3D" unique_id=568532702]
+script = ExtResource("1_toau8")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1326366133]
+pixel_size = 0.05
+billboard = 1
+texture = ExtResource("2_toau8")
+region_enabled = true
+region_rect = Rect2(228, 5, 24, 24)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1540084887]
+shape = SubResource("BoxShape3D_t8knd")
