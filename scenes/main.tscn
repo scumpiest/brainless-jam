@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://bdb6hhyd1fcx" path="res://resources/unit_data/Ranged.tres" id="5_choun"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spawner.tscn" id="9_85g3d"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy.tscn" id="10_choun"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/organ.tscn" id="11_ya4ey"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qli"]
 shading_mode = 0
@@ -90,3 +91,6 @@ mesh = SubResource("BoxMesh_selbox")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3)
 enemy_scene = ExtResource("10_choun")
 level = NodePath("..")
+
+[node name="Organ" parent="." unique_id=815794704 instance=ExtResource("11_ya4ey")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.643365, 2.0999994, -10.387574)
