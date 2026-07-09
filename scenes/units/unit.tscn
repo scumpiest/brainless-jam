@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cjl51jxvk5c5m"]
 
 [ext_resource type="Script" uid="uid://cxvt4yu2p5qn0" path="res://scenes/units/unit.gd" id="1_unit"]
-[ext_resource type="SpriteFrames" path="res://resources/sprites/pawn_sprite_frames.tres" id="2_frames"]
+[ext_resource type="SpriteFrames" uid="uid://cph26eqi1l8uh" path="res://resources/sprites/pawn_sprite_frames.tres" id="2_frames"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_riqys"]
 height = 1.3095703
@@ -9,18 +9,28 @@ height = 1.3095703
 [sub_resource type="SphereShape3D" id="SphereShape3D_bhunq"]
 
 [node name="Unit" type="CharacterBody3D" unique_id=1202909473]
-collision_mask = 12
+collision_mask = 28
 script = ExtResource("1_unit")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=900481361]
 billboard = 1
 sprite_frames = ExtResource("2_frames")
-animation = &"idle"
+animation = &"mine"
+frame_progress = 0.7892864
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1452511137]
 shape = SubResource("CapsuleShape3D_riqys")
 
 [node name="InteractionArea" type="Area3D" parent="." unique_id=1417467612]
+collision_layer = 16
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=903881695]
 shape = SubResource("SphereShape3D_bhunq")
+
+[node name="Timer" type="Timer" parent="." unique_id=550335807]
+wait_time = 3.0
+
+[connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_area_entered"]
+[connection signal="area_exited" from="InteractionArea" to="." method="_on_interaction_area_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

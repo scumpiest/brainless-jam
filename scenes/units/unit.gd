@@ -10,6 +10,10 @@ enum UnitClass { MELEE, RANGED, MINER }
 
 @onready var _sprite: AnimatedSprite3D = $AnimatedSprite3D
 @onready var _interaction_area: Area3D = $InteractionArea
+@onready var _timer: Timer = $Timer
+
+var resource: Area3D
+var is_mining: bool = false
 
 # Stats
 var max_hp: float
@@ -56,7 +60,9 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= _gravity * delta
 
 	var direction := Vector3.ZERO
-
+	if is_mining == true:
+		_sprite.play("mine")
+		return
 	if _has_move_target:
 		var to_target := _move_target - global_position
 		to_target.y = 0.0
@@ -100,3 +106,25 @@ func commander_registered(commander: Commander) -> void:
 	if _commander:
 		_steering_behaviours.push_back(_commander.get_behaviour(SteeringBehaviour.BehaviourType.Separation))
 		_steering_behaviours.push_back(_commander.get_behaviour(SteeringBehaviour.BehaviourType.Avoidance))
+
+
+func mining():
+	print("mined")
+	if resource != null:
+		resource.mine()
+
+func _on_interaction_area_area_entered(area: Area3D) -> void:
+	#if UnitClass == UnitClass.MINER:
+		_timer.start()
+		is_mining = true
+		resource = area
+		_sprite.play("mine")
+
+
+func _on_interaction_area_area_exited(area: Area3D) -> void:
+	is_mining = false
+
+
+func _on_timer_timeout() -> void:
+	mining()
+	_timer.start()
