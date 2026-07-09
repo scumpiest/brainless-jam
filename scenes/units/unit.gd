@@ -114,7 +114,7 @@ func mining():
 		resource.mine()
 
 func _on_interaction_area_area_entered(area: Area3D) -> void:
-	#if UnitClass == UnitClass.MINER:
+	if area is ResourceVein:
 		_timer.start()
 		is_mining = true
 		resource = area
