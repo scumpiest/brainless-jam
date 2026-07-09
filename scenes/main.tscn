@@ -4,10 +4,12 @@
 [ext_resource type="Script" uid="uid://c867p3j2t6itx" path="res://scenes/level.gd" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://matbq3vlj76u" path="res://scenes/camera_3d.gd" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://cq5r0k01l05ku" path="res://scenes/resource.tscn" id="3_sugp2"]
-[ext_resource type="Resource" uid="uid://bnaon71x7sikp" path="res://resources/UnitData/Melee.tres" id="3_tipki"]
-[ext_resource type="Resource" uid="uid://pfsplf04nugm" path="res://resources/UnitData/Miner.tres" id="4_85g3d"]
+[ext_resource type="Resource" uid="uid://bnaon71x7sikp" path="res://resources/unit_data/Melee.tres" id="3_tipki"]
+[ext_resource type="Resource" uid="uid://pfsplf04nugm" path="res://resources/unit_data/Miner.tres" id="4_85g3d"]
 [ext_resource type="Script" uid="uid://554rf3x0hi34" path="res://scenes/selection_manager.gd" id="4_selmgr"]
-[ext_resource type="Resource" uid="uid://bdb6hhyd1fcx" path="res://resources/UnitData/Ranged.tres" id="5_choun"]
+[ext_resource type="Resource" uid="uid://bdb6hhyd1fcx" path="res://resources/unit_data/Ranged.tres" id="5_choun"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spawner.tscn" id="9_85g3d"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy.tscn" id="10_choun"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qli"]
 shading_mode = 0
@@ -83,3 +85,8 @@ _level = NodePath("..")
 
 [node name="BoxVisual" type="MeshInstance3D" parent="SelectionManager" unique_id=933194909]
 mesh = SubResource("BoxMesh_selbox")
+
+[node name="EnemySpawner" parent="." unique_id=1068631319 node_paths=PackedStringArray("level") instance=ExtResource("9_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3)
+enemy_scene = ExtResource("10_choun")
+level = NodePath("..")

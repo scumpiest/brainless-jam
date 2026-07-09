@@ -2,11 +2,13 @@ extends CharacterBody3D
 
 class_name Unit
 
-enum UnitClass { MELEE, RANGED, MINER }
+signal died
+signal health_changed(current_hp: float, max_hp_val: float)
 
 @export var unit_data: UnitData
 @export var speed: float = 5.0
 @export var stop_distance: float = 0.5
+@export var projectile_scene: PackedScene
 
 @onready var _sprite: AnimatedSprite3D = $AnimatedSprite3D
 @onready var _interaction_area: Area3D = $InteractionArea
@@ -21,7 +23,10 @@ var current_hp: float
 var attack_range: float
 var attack_speed: float
 var attack_damage: float
-#var upgrade_slots: Array[UpgradeData] = []
+var is_miner: bool
+
+# Upgrade effects indexed by EffectType for O(1) lookup
+var _active_effects: Dictionary = {}
 
 # Steering
 var _steering_behaviours: Array[SteeringBehaviour] = []
@@ -32,10 +37,31 @@ var _gravity: float = 9.8
 var _move_target: Vector3
 var _has_move_target: bool = false
 
+# Combat state
+var _attack_cooldown: float = 0.0
+var _stun_timer: float = 0.0
+var _time_since_damage: float = INF
+
+var _hp_label: Label3D
+
 
 func _ready() -> void:
 	add_to_group("units")
+	_apply_unit_data()
 	_apply_sprite_frames()
+	_apply_upgrades()
+	_create_hp_label()
+
+
+func _apply_unit_data() -> void:
+	if unit_data == null:
+		return
+	max_hp = unit_data.max_hp
+	current_hp = unit_data.max_hp
+	attack_range = unit_data.attack_range
+	attack_speed = unit_data.attack_speed
+	attack_damage = unit_data.attack_damage
+	is_miner = unit_data.is_miner
 
 
 func _apply_sprite_frames() -> void:
@@ -45,19 +71,50 @@ func _apply_sprite_frames() -> void:
 	_sprite.play("idle")
 
 
+func _apply_upgrades() -> void:
+	if unit_data == null:
+		return
+	for upgrade: UpgradeData in unit_data.upgrade_slots:
+		for effect: UpgradeEffectData in upgrade.upgrade_effects:
+			_active_effects[effect.effect_type] = effect
+
+
+func _create_hp_label() -> void:
+	_hp_label = Label3D.new()
+	_hp_label.position = Vector3(0.0, 1.2, 0.0)
+	_hp_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	_hp_label.font_size = 14
+	add_child(_hp_label)
+	_update_hp_label()
+
+
+func _update_hp_label() -> void:
+	if _hp_label == null or max_hp <= 0.0:
+		return
+	_hp_label.text = "%d/%d" % [int(current_hp), int(max_hp)]
+	var ratio: float = current_hp / max_hp
+	_hp_label.modulate = Color(1.0 - ratio, ratio, 0.0)
+
+
 func select() -> void:
-	# TODO: add selection outline
 	_sprite.modulate = Color.BLUE
 
 
 func deselect() -> void:
-	# TODO: remove selection outline
 	_sprite.modulate = Color.WHITE
 
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= _gravity * delta
+
+	_tick_stun(delta)
+	_tick_regen(delta)
+	_tick_attack(delta)
+
+	if _stun_timer > 0.0:
+		move_and_slide()
+		return
 
 	var direction := Vector3.ZERO
 	if is_mining == true:
@@ -66,13 +123,13 @@ func _physics_process(delta: float) -> void:
 	if _has_move_target:
 		var to_target := _move_target - global_position
 		to_target.y = 0.0
-		
-		var dirAdjustment: Vector2 = Vector2() 
+
+		var dir_adjustment: Vector2 = Vector2()
 		for behaviour: SteeringBehaviour in _steering_behaviours:
-			dirAdjustment += behaviour.calc_direction(self) # TODO: get nodes from commander
-		
-		to_target += Vector3(dirAdjustment.x, 0, dirAdjustment.y)
-		
+			dir_adjustment += behaviour.calc_direction(self)
+
+		to_target += Vector3(dir_adjustment.x, 0, dir_adjustment.y)
+
 		if to_target.length() <= stop_distance:
 			_has_move_target = false
 			velocity.x = move_toward(velocity.x, 0.0, speed)
@@ -94,9 +151,124 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+
+func attack(target: Unit) -> void:
+	target.take_damage(attack_damage)
+
+	var stun_fx: UpgradeEffectData = _active_effects.get(UpgradeEffectData.EffectType.STUN_ON_HIT)
+	if stun_fx and randf() < stun_fx.value:
+		target.apply_stun(stun_fx.secondary_value)
+
+	var cleave_fx: UpgradeEffectData = _active_effects.get(UpgradeEffectData.EffectType.CLEAVE)
+	if cleave_fx:
+		_do_cleave(target, cleave_fx)
+
+
+func take_damage(amount: float) -> void:
+	_time_since_damage = 0.0
+	current_hp -= amount
+	health_changed.emit(current_hp, max_hp)
+	_update_hp_label()
+	if current_hp <= 0.0:
+		_die()
+
+
+func apply_stun(duration: float) -> void:
+	_stun_timer = maxf(_stun_timer, duration)
+
+
+func _tick_stun(delta: float) -> void:
+	if _stun_timer > 0.0:
+		_stun_timer -= delta
+
+
+func _tick_regen(delta: float) -> void:
+	var regen_fx: UpgradeEffectData = _active_effects.get(UpgradeEffectData.EffectType.REGEN_SHIELD)
+	if regen_fx == null:
+		return
+	_time_since_damage += delta
+	if _time_since_damage >= regen_fx.secondary_value:
+		var prev_hp: float = current_hp
+		current_hp = minf(current_hp + regen_fx.value * delta, max_hp)
+		if current_hp != prev_hp:
+			health_changed.emit(current_hp, max_hp)
+			_update_hp_label()
+
+
+func _tick_attack(delta: float) -> void:
+	if attack_range <= 0.0 or attack_speed <= 0.0:
+		return
+	if _attack_cooldown > 0.0:
+		_attack_cooldown -= delta
+		return
+
+	for node: Node in get_tree().get_nodes_in_group("enemies"):
+		var target := node as Node3D
+		if target == null:
+			continue
+		if global_position.distance_to(target.global_position) <= attack_range:
+			if unit_data and unit_data.unit_class == UnitData.UnitClass.RANGED:
+				_fire_projectile(target)
+			else:
+				var unit_target := target as Unit
+				if unit_target:
+					attack(unit_target)
+				else:
+					target.call("take_damage", attack_damage)
+			_attack_cooldown = 1.0 / attack_speed
+			return
+
+
+func _fire_projectile(target: Node3D) -> void:
+	if projectile_scene == null:
+		return
+	var proj: Node3D = projectile_scene.instantiate()
+	get_tree().current_scene.add_child(proj)
+	proj.global_position = global_position + Vector3.UP * 0.5
+	if proj.has_method("setup"):
+		proj.call("setup", target.global_position + Vector3.UP * 0.5, attack_damage)
+	_sprite.flip_h = target.global_position.x < global_position.x
+
+
+func _do_cleave(primary_target: Unit, fx: UpgradeEffectData) -> void:
+	var arc_half_rad: float = deg_to_rad(fx.secondary_value * 0.5)
+	var forward: Vector3 = (primary_target.global_position - global_position).normalized()
+	forward.y = 0.0
+
+	for node: Node in get_tree().get_nodes_in_group("enemies"):
+		var target := node as Node3D
+		if target == null or target == primary_target:
+			continue
+		var to_enemy: Vector3 = (target.global_position - global_position)
+		to_enemy.y = 0.0
+		if to_enemy.length() > attack_range:
+			continue
+		if forward.angle_to(to_enemy.normalized()) <= arc_half_rad:
+			target.call("take_damage", attack_damage * fx.value)
+
+
+func _die() -> void:
+	var explode_fx: UpgradeEffectData = _active_effects.get(UpgradeEffectData.EffectType.EXPLODE_ON_DEATH)
+	if explode_fx:
+		_explode(explode_fx.value, explode_fx.secondary_value)
+	remove_from_group("units")
+	died.emit()
+	queue_free()
+	GameState.check_defeat()
+
+
+func _explode(damage: float, radius: float) -> void:
+	for node: Node in get_tree().get_nodes_in_group("enemies"):
+		var target := node as Node3D
+		if target == null:
+			continue
+		if global_position.distance_to(target.global_position) <= radius:
+			target.call("take_damage", damage)
+
+
 func move_to(target: Vector3) -> void:
 	_move_target = target
-	_move_target.y = global_position.y # keep the same height
+	_move_target.y = global_position.y
 	_has_move_target = true
 
 
