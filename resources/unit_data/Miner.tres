@@ -1,8 +1,9 @@
 [gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://pfsplf04nugm"]
 
 [ext_resource type="SpriteFrames" uid="uid://cph26eqi1l8uh" path="res://resources/sprites/pawn_sprite_frames.tres" id="1_477oj"]
-[ext_resource type="Script" uid="uid://d2vhdsaei28sc" path="res://resources/UnitData/unit_data.gd" id="1_t74vx"]
+[ext_resource type="Script" uid="uid://d2vhdsaei28sc" path="res://resources/unit_data/unit_data.gd" id="1_t74vx"]
 [ext_resource type="Texture2D" uid="uid://b7kjuevp83k2g" path="res://assets/temp/Pawn_Idle.png" id="2_7rjf0"]
+[ext_resource type="Script" uid="uid://ts55dgp8srei" path="res://resources/upgrade_data/upgrade_data.gd" id="4_kovj4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trceg"]
 atlas = ExtResource("2_7rjf0")
@@ -13,5 +14,7 @@ script = ExtResource("1_t74vx")
 unit_class = 2
 unit_name = "Miner"
 unit_icon = SubResource("AtlasTexture_trceg")
+max_hp = 40.0
 animation_sprite_frames = ExtResource("1_477oj")
+is_miner = true
 metadata/_custom_type_script = "uid://d2vhdsaei28sc"

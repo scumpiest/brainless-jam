@@ -2,7 +2,9 @@ extends Resource
 
 class_name UnitData
 
-@export var unit_class: Unit.UnitClass
+enum UnitClass { MELEE, RANGED, MINER }
+
+@export var unit_class: UnitClass
 @export var unit_name: String
 @export var unit_icon: Texture2D
 @export var max_hp: float
@@ -10,4 +12,5 @@ class_name UnitData
 @export var attack_speed: float
 @export var attack_damage: float
 @export var animation_sprite_frames: SpriteFrames
-#@export var upgrade_slots: Array[UpgradeData]
+@export var is_miner: bool = false
+@export var upgrade_slots: Array[UpgradeData]

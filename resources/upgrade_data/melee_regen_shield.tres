@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://dv5n2ks6x4pm8"]
+
+[ext_resource type="Script" uid="uid://ts55dgp8srei" path="res://resources/upgrade_data/upgrade_data.gd" id="1_updata"]
+[ext_resource type="Script" uid="uid://cxm3p7savnk1b" path="res://resources/upgrade_data/upgrade_effect_data.gd" id="2_ufxdata"]
+
+[sub_resource type="Resource" id="Resource_regen_effect"]
+script = ExtResource("2_ufxdata")
+effect_type = 2
+value = 5.0
+secondary_value = 3.0
+
+[resource]
+script = ExtResource("1_updata")
+upgrade_name = "Regenerative Shield"
+upgrade_description = "The unit regenerates 5 HP per second after not taking damage for 3 seconds."
+upgrade_cost = 125
+upgrade_effects = Array[ExtResource("2_ufxdata")]([SubResource("Resource_regen_effect")])

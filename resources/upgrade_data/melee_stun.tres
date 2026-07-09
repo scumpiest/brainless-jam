@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://bq4f8wm2n5ys7"]
+
+[ext_resource type="Script" uid="uid://ts55dgp8srei" path="res://resources/upgrade_data/upgrade_data.gd" id="1_updata"]
+[ext_resource type="Script" uid="uid://cxm3p7savnk1b" path="res://resources/upgrade_data/upgrade_effect_data.gd" id="2_ufxdata"]
+
+[sub_resource type="Resource" id="Resource_stun_effect"]
+script = ExtResource("2_ufxdata")
+value = 0.3
+secondary_value = 2.0
+
+[resource]
+script = ExtResource("1_updata")
+upgrade_name = "Stun"
+upgrade_description = "Attacks have a 30% chance to stun enemies, preventing them from acting for 2 seconds."
+upgrade_cost = 75
+upgrade_effects = Array[ExtResource("2_ufxdata")]([SubResource("Resource_stun_effect")])

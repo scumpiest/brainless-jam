@@ -1,8 +1,9 @@
 [gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://bdb6hhyd1fcx"]
 
 [ext_resource type="SpriteFrames" uid="uid://d1oe6jjmhqp4h" path="res://resources/sprites/archer_sprite_frames.tres" id="1_1c8hb"]
-[ext_resource type="Script" uid="uid://d2vhdsaei28sc" path="res://resources/UnitData/unit_data.gd" id="1_wnbl3"]
+[ext_resource type="Script" uid="uid://d2vhdsaei28sc" path="res://resources/unit_data/unit_data.gd" id="1_wnbl3"]
 [ext_resource type="Texture2D" uid="uid://ct7iary7aw075" path="res://assets/temp/Archer_Idle.png" id="2_gg73d"]
+[ext_resource type="Script" uid="uid://ts55dgp8srei" path="res://resources/upgrade_data/upgrade_data.gd" id="4_0qtpx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tipki"]
 atlas = ExtResource("2_gg73d")
@@ -13,5 +14,9 @@ script = ExtResource("1_wnbl3")
 unit_class = 1
 unit_name = "Ranged"
 unit_icon = SubResource("AtlasTexture_tipki")
+max_hp = 60.0
+attack_range = 6.0
+attack_speed = 1.0
+attack_damage = 12.0
 animation_sprite_frames = ExtResource("1_1c8hb")
 metadata/_custom_type_script = "uid://d2vhdsaei28sc"

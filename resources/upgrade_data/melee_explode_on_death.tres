@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://2tmjpsxrvsin"]
+
+[ext_resource type="Script" uid="uid://ts55dgp8srei" path="res://resources/upgrade_data/upgrade_data.gd" id="1_updata"]
+[ext_resource type="Script" uid="uid://cxm3p7savnk1b" path="res://resources/upgrade_data/upgrade_effect_data.gd" id="2_ufxdata"]
+
+[sub_resource type="Resource" id="Resource_explode_effect"]
+script = ExtResource("2_ufxdata")
+effect_type = 3
+value = 50.0
+secondary_value = 3.0
+
+[resource]
+script = ExtResource("1_updata")
+upgrade_name = "Explode on Death"
+upgrade_description = "When the unit dies, it explodes dealing 50 damage to all enemies within a 3-unit radius."
+upgrade_cost = 150
+upgrade_effects = Array[ExtResource("2_ufxdata")]([SubResource("Resource_explode_effect")])

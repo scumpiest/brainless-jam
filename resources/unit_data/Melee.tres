@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://bnaon71x7sikp"]
+
+[ext_resource type="SpriteFrames" uid="uid://bcpl3f2kh50fj" path="res://resources/sprites/warrior_sprite_frames.tres" id="1_bdyix"]
+[ext_resource type="Script" uid="uid://d2vhdsaei28sc" path="res://resources/unit_data/unit_data.gd" id="1_mpd1q"]
+[ext_resource type="Texture2D" uid="uid://bblnpd88fdm05" path="res://assets/temp/Warrior_Idle.png" id="2_psy6e"]
+[ext_resource type="Resource" uid="uid://bq4f8wm2n5ys7" path="res://resources/upgrade_data/melee_stun.tres" id="3_stun"]
+[ext_resource type="Resource" uid="uid://cr7katp3m8x02" path="res://resources/upgrade_data/melee_cleave.tres" id="4_cleave"]
+[ext_resource type="Script" uid="uid://ts55dgp8srei" path="res://resources/upgrade_data/upgrade_data.gd" id="4_djgjd"]
+[ext_resource type="Resource" uid="uid://dv5n2ks6x4pm8" path="res://resources/upgrade_data/melee_regen_shield.tres" id="5_regen"]
+[ext_resource type="Resource" uid="uid://2tmjpsxrvsin" path="res://resources/upgrade_data/melee_explode_on_death.tres" id="6_explode"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ya4ey"]
+atlas = ExtResource("2_psy6e")
+region = Rect2(0, 0, 192, 0)
+
+[resource]
+script = ExtResource("1_mpd1q")
+unit_name = "Melee"
+unit_icon = SubResource("AtlasTexture_ya4ey")
+max_hp = 120.0
+attack_range = 1.5
+attack_speed = 1.2
+attack_damage = 18.0
+animation_sprite_frames = ExtResource("1_bdyix")
+upgrade_slots = Array[ExtResource("4_djgjd")]([ExtResource("3_stun"), ExtResource("4_cleave"), ExtResource("5_regen"), ExtResource("6_explode")])
+metadata/_custom_type_script = "uid://d2vhdsaei28sc"

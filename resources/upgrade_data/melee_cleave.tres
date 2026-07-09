@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://cr7katp3m8x02"]
+
+[ext_resource type="Script" uid="uid://ts55dgp8srei" path="res://resources/upgrade_data/upgrade_data.gd" id="1_updata"]
+[ext_resource type="Script" uid="uid://cxm3p7savnk1b" path="res://resources/upgrade_data/upgrade_effect_data.gd" id="2_ufxdata"]
+
+[sub_resource type="Resource" id="Resource_cleave_effect"]
+script = ExtResource("2_ufxdata")
+effect_type = 1
+value = 0.6
+secondary_value = 90.0
+
+[resource]
+script = ExtResource("1_updata")
+upgrade_name = "Cleave Attack"
+upgrade_description = "Attacks strike all enemies within a 90-degree arc, dealing 60% damage to secondary targets."
+upgrade_cost = 100
+upgrade_effects = Array[ExtResource("2_ufxdata")]([SubResource("Resource_cleave_effect")])
