@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy_spawner.gd" id="1_spawner"]
+[ext_resource type="Texture2D" path="res://assets/temp/enemy_spawner.png" id="2_sprite"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lymph"]
+radius = 0.8
+
+[node name="EnemySpawner" type="StaticBody3D"]
+collision_layer = 2
+script = ExtResource("1_spawner")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+position = Vector3(0, 0.8, 0)
+billboard = 1
+pixel_size = 0.006
+texture = ExtResource("2_sprite")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_lymph")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1, 1, 1, 1)
+light_energy = 3.0
+omni_range = 4.0
