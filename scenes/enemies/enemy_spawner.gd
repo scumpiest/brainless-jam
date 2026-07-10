@@ -16,30 +16,24 @@ const SPAWN_INTERVAL_OFFSET: float = 0.5
 var _current_hp: float
 var _spawn_timer: float = 0.0
 var _active_enemies: Array[Enemy] = []
-var _hp_label: Label3D
+
+@onready var _hp_label: Label3D = $HpLabel
 
 
 func _ready() -> void:
 	add_to_group("enemy_spawners")
 	add_to_group("enemies")
 	_current_hp = max_hp
-	_create_hp_label()
+	_update_hp_label()
 	_spawn_timer = spawn_interval * SPAWN_INTERVAL_OFFSET
 
 
-func _create_hp_label() -> void:
-	_hp_label = Label3D.new()
-	_hp_label.position = Vector3(0.0, 1.8, 0.0)
-	_hp_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_hp_label.font_size = 40
-	add_child(_hp_label)
-	_update_hp_label()
-
-
 func _update_hp_label() -> void:
-	if _hp_label == null:
+	if max_hp <= 0.0:
 		return
 	_hp_label.text = "%d/%d" % [int(_current_hp), int(max_hp)]
+	var ratio: float = _current_hp / max_hp
+	_hp_label.modulate = Color(1.0 - ratio, ratio, 0.0)
 
 
 func _process(delta: float) -> void:

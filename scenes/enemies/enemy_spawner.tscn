@@ -23,3 +23,8 @@ shape = SubResource("SphereShape3D_lymph")
 light_color = Color(1, 1, 1, 1)
 light_energy = 3.0
 omni_range = 4.0
+
+[node name="HpLabel" type="Label3D" parent="."]
+position = Vector3(0, 1.8, 0)
+billboard = 1
+font_size = 40

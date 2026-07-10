@@ -42,7 +42,7 @@ var _attack_cooldown: float = 0.0
 var _stun_timer: float = 0.0
 var _time_since_damage: float = INF
 
-var _hp_label: Label3D
+@onready var _hp_label: Label3D = $HpLabel
 
 
 func _ready() -> void:
@@ -50,7 +50,7 @@ func _ready() -> void:
 	_apply_unit_data()
 	_apply_sprite_frames()
 	_apply_upgrades()
-	_create_hp_label()
+	_update_hp_label()
 
 
 func _apply_unit_data() -> void:
@@ -79,17 +79,8 @@ func _apply_upgrades() -> void:
 			_active_effects[effect.effect_type] = effect
 
 
-func _create_hp_label() -> void:
-	_hp_label = Label3D.new()
-	_hp_label.position = Vector3(0.0, 1.2, 0.0)
-	_hp_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_hp_label.font_size = 14
-	add_child(_hp_label)
-	_update_hp_label()
-
-
 func _update_hp_label() -> void:
-	if _hp_label == null or max_hp <= 0.0:
+	if max_hp <= 0.0:
 		return
 	_hp_label.text = "%d/%d" % [int(current_hp), int(max_hp)]
 	var ratio: float = current_hp / max_hp

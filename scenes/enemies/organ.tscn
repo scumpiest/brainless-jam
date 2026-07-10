@@ -35,3 +35,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_shield")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_organ")
+
+[node name="HpLabel" type="Label3D" parent="."]
+position = Vector3(0, 2.5, 0)
+billboard = 1
+font_size = 16

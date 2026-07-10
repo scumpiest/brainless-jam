@@ -5,30 +5,19 @@ extends StaticBody3D
 
 var _current_hp: float
 var _shielded: bool = true
-var _hp_label: Label3D
 
 @onready var _shield_mesh: MeshInstance3D = $ShieldMesh
+@onready var _hp_label: Label3D = $HpLabel
 
 
 func _ready() -> void:
 	add_to_group("organ")
 	add_to_group("enemies")
 	_current_hp = max_hp
-	_create_hp_label()
-
-
-func _create_hp_label() -> void:
-	_hp_label = Label3D.new()
-	_hp_label.position = Vector3(0.0, 2.5, 0.0)
-	_hp_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_hp_label.font_size = 16
-	add_child(_hp_label)
 	_update_hp_label()
 
 
 func _update_hp_label() -> void:
-	if _hp_label == null:
-		return
 	if _shielded:
 		_hp_label.text = "ORGAN [SHIELDED]"
 		_hp_label.modulate = Color.CYAN
