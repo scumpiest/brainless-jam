@@ -207,28 +207,13 @@ func _tick_attack(delta: float) -> void:
 		if target == null:
 			continue
 		if global_position.distance_to(target.global_position) <= attack_range:
-			if unit_data and unit_data.unit_class == UnitData.UnitClass.RANGED:
-				_fire_projectile(target)
+			var unit_target := target as Unit
+			if unit_target:
+				attack(unit_target)
 			else:
-				var unit_target := target as Unit
-				if unit_target:
-					attack(unit_target)
-				else:
-					target.call("take_damage", attack_damage)
+				target.call("take_damage", attack_damage)
 			_attack_cooldown = 1.0 / attack_speed
 			return
-
-
-func _fire_projectile(target: Node3D) -> void:
-	if projectile_scene == null:
-		return
-	var proj: Node3D = projectile_scene.instantiate()
-	get_tree().current_scene.add_child(proj)
-	proj.global_position = global_position + Vector3.UP * 0.5
-	if proj.has_method("setup"):
-		proj.call("setup", target.global_position + Vector3.UP * 0.5, attack_damage)
-	_sprite.flip_h = target.global_position.x < global_position.x
-
 
 func _do_cleave(primary_target: Unit, fx: UpgradeEffectData) -> void:
 	var arc_half_rad: float = deg_to_rad(fx.secondary_value * 0.5)
