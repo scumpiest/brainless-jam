@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cjl51jxvk5c5m" path="res://scenes/units/unit.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://c867p3j2t6itx" path="res://scenes/level.gd" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://matbq3vlj76u" path="res://scenes/camera_3d.gd" id="2_0wfyh"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://cq5r0k01l05ku" path="res://scenes/resource.tscn" id="3_sugp2"]
 [ext_resource type="Resource" uid="uid://bnaon71x7sikp" path="res://resources/unit_data/Melee.tres" id="3_tipki"]
 [ext_resource type="Resource" uid="uid://pfsplf04nugm" path="res://resources/unit_data/Miner.tres" id="4_85g3d"]
@@ -35,6 +36,8 @@ script = ExtResource("1_tefeu")
 map_data_path = "\"Banana\""
 cell_size = 1
 top_left_offset = Vector2i(16, 16)
+
+[node name="HUD" parent="." unique_id=159810047 instance=ExtResource("2_eb6dy")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=302450973]
 collision_layer = 8
