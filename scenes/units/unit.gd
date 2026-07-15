@@ -31,6 +31,7 @@ var _active_effects: Dictionary = {}
 # Steering
 var _steering_behaviours: Array[SteeringBehaviour] = []
 var _commander: Commander
+var _selection_manager: SelectionManager
 
 var _gravity: float = 9.8
 
@@ -87,12 +88,14 @@ func _update_hp_label() -> void:
 	_hp_label.modulate = Color(1.0 - ratio, ratio, 0.0)
 
 
-func select() -> void:
+func select(selection_manager: SelectionManager) -> void:
 	_sprite.modulate = Color.BLUE
+	_selection_manager = selection_manager
 
 
 func deselect() -> void:
 	_sprite.modulate = Color.WHITE
+	_selection_manager = null
 
 
 func _physics_process(delta: float) -> void:
@@ -228,6 +231,13 @@ func _die() -> void:
 	if explode_fx:
 		_explode(explode_fx.value, explode_fx.secondary_value)
 	remove_from_group("units")
+	
+	if _commander:
+		_commander.unregister(self)
+	
+	if _selection_manager:
+		_selection_manager.deselect(self)
+	
 	died.emit()
 	queue_free()
 	GameState.check_defeat()

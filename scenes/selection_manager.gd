@@ -1,5 +1,7 @@
 extends Node3D
 
+class_name SelectionManager
+
 @export var ground_y: float = 0.5
 
 var is_dragging: bool = false
@@ -97,7 +99,11 @@ func select_units_in_box() -> void:
 		if select_rect.has_point(xz):
 			selected_units.append(unit)
 			if unit.has_method("select"):
-				unit.select()
+				unit.select(self)
+
+
+func deselect(unit: Unit) -> void:
+	selected_units.erase(unit)
 
 
 func deselect_all() -> void:
