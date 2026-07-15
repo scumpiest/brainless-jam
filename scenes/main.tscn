@@ -75,10 +75,9 @@ unit_data = ExtResource("3_tipki")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 1.1366267)
 unit_data = ExtResource("5_choun")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=888493479 node_paths=PackedStringArray("target")]
-transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.70710677, 0, -0.70710677, 0.7071067, 0, 3, 3)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=888493479]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 7.5, 5)
 script = ExtResource("2_0wfyh")
-target = NodePath("../Unit")
 
 [node name="Resource" parent="." unique_id=1774678447 instance=ExtResource("3_sugp2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
