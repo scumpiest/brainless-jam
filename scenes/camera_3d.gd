@@ -1,11 +1,18 @@
 extends Camera3D
 
-@export var target: Node3D
-@export var offset: Vector3 = Vector3(0, 10, 6) # Adjust position relative to player
-@export var pitch_degrees: float = -50.0
+@export var speed: float = 10 
 
 
 func _physics_process(_delta: float) -> void:
-	if target:
-		global_position = global_position.lerp(target.global_position + offset, 0.1)
-		rotation_degrees.x = pitch_degrees # fixed camera angle
+	var moveDir: Vector2 = Vector2(0, 0)
+
+	moveDir.x = -1 if Input.is_action_pressed("move_left") else 0
+	moveDir.x += 1 if Input.is_action_pressed("move_right") else 0
+	moveDir.y = -1 if Input.is_action_pressed("move_forward") else 0
+	moveDir.y += 1 if Input.is_action_pressed("move_back") else 0
+
+	moveDir = moveDir.normalized() * speed * _delta
+
+	position.x += moveDir.x
+	position.z += moveDir.y
+
