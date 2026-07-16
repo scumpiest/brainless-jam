@@ -1,17 +1,9 @@
 [gd_scene format=3 uid="uid://bw6dxqekhybth"]
 
-[ext_resource type="PackedScene" uid="uid://cjl51jxvk5c5m" path="res://scenes/units/unit.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://c867p3j2t6itx" path="res://scenes/level.gd" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://matbq3vlj76u" path="res://scenes/camera_3d.gd" id="2_0wfyh"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_eb6dy"]
-[ext_resource type="PackedScene" uid="uid://cq5r0k01l05ku" path="res://scenes/resource.tscn" id="3_sugp2"]
-[ext_resource type="Resource" uid="uid://bnaon71x7sikp" path="res://resources/unit_data/Melee.tres" id="3_tipki"]
-[ext_resource type="Resource" uid="uid://pfsplf04nugm" path="res://resources/unit_data/Miner.tres" id="4_85g3d"]
 [ext_resource type="Script" uid="uid://554rf3x0hi34" path="res://scenes/selection_manager.gd" id="4_selmgr"]
-[ext_resource type="Resource" uid="uid://bdb6hhyd1fcx" path="res://resources/unit_data/Ranged.tres" id="5_choun"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spawner.tscn" id="9_85g3d"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/enemy.tscn" id="10_choun"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/organ.tscn" id="11_ya4ey"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qli"]
 shading_mode = 0
@@ -31,56 +23,30 @@ albedo_color = Color(0, 1, 0, 0.2)
 material = SubResource("StandardMaterial3D_selbox")
 size = Vector3(1, 0.02, 1)
 
-[node name="Main" type="Node3D" unique_id=1674497327]
+[node name="Main" type="Node3D" unique_id=1674497327 node_paths=PackedStringArray("_floor", "_camera")]
 script = ExtResource("1_tefeu")
-map_data_path = "\"Banana\""
+map_data_path = "res://resources/levels/organ1.b64"
 cell_size = 1
-top_left_offset = Vector2i(16, 16)
+_floor = NodePath("Floor")
+_camera = NodePath("Camera3D")
+_player_unit_spawn_spiral_scale = 0.5
+_player_unit_spawn_radius_scale = 0.3
 
 [node name="HUD" parent="." unique_id=159810047 instance=ExtResource("2_eb6dy")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=302450973]
+[node name="Floor" type="StaticBody3D" parent="." unique_id=302450973]
 collision_layer = 8
 collision_mask = 0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2053686626]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.055160522, 0, -3.5395012)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=2053686626]
 mesh = SubResource("BoxMesh_0wfyh")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1755940706]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06539154, 0.033935547, -3.4774017)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1755940706]
 shape = SubResource("BoxShape3D_o5qli")
 
-[node name="Unit" parent="." unique_id=1202909473 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-unit_data = ExtResource("3_tipki")
-
-[node name="Unit2" parent="." unique_id=827023094 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49024928, 1, 0.8476963)
-unit_data = ExtResource("4_85g3d")
-
-[node name="Unit3" parent="." unique_id=1409745222 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5066583, 1, 0)
-unit_data = ExtResource("5_choun")
-
-[node name="Unit4" parent="." unique_id=110123638 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 0)
-unit_data = ExtResource("4_85g3d")
-
-[node name="Unit5" parent="." unique_id=1164454496 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1076784, 1, 0.7575321)
-unit_data = ExtResource("3_tipki")
-
-[node name="Unit6" parent="." unique_id=449736899 groups=["units"] instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.449556, 1, 1.1366267)
-unit_data = ExtResource("5_choun")
-
 [node name="Camera3D" type="Camera3D" parent="." unique_id=888493479]
-transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 7.5, 5)
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 4, 5)
 script = ExtResource("2_0wfyh")
-
-[node name="Resource" parent="." unique_id=1774678447 instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
 
 [node name="SelectionManager" type="Node3D" parent="." unique_id=339003157 node_paths=PackedStringArray("_level")]
 script = ExtResource("4_selmgr")
@@ -88,11 +54,3 @@ _level = NodePath("..")
 
 [node name="BoxVisual" type="MeshInstance3D" parent="SelectionManager" unique_id=933194909]
 mesh = SubResource("BoxMesh_selbox")
-
-[node name="EnemySpawner" parent="." unique_id=1068631319 node_paths=PackedStringArray("level") instance=ExtResource("9_85g3d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3)
-enemy_scene = ExtResource("10_choun")
-level = NodePath("..")
-
-[node name="Organ" parent="." unique_id=815794704 instance=ExtResource("11_ya4ey")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.643365, 2.0999994, -10.387574)

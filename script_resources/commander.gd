@@ -30,11 +30,11 @@ func get_behaviour(type: SteeringBehaviour.BehaviourType) -> SteeringBehaviour:
 	return _steeringBehaviours[type]
 
 
-func has_troop(troop: Node3D) -> bool:
+func has_troop(troop: Unit) -> bool:
 	return _troops.has(troop)
 
 
-func register(troop: Node3D) -> void:
+func register(troop: Unit) -> void:
 	if has_troop(troop):
 		return
 	
@@ -44,20 +44,12 @@ func register(troop: Node3D) -> void:
 	troop.commander_registered(self)
 
 	
-func unregister(troop: Node3D) -> void:
-	troop.commander_registered(null)
+func unregister(troop: Unit) -> void:
 	for type: SteeringBehaviour.BehaviourType in _steeringBehaviours:
 		get_behaviour(type).units.erase(troop)
-	_troops.erase(troop)			
-
-
-func clear_troops() -> void:
-	for troop in _troops:
-		troop.commander_registered(null)
-
-	for type: SteeringBehaviour.BehaviourType in _steeringBehaviours:
-		get_behaviour(type).units.clear()
-	_troops.clear()
+	_troops.erase(troop)
+	if _troops.is_empty():
+		queue_free()
 
 
 func _update_next_target_path() -> void:

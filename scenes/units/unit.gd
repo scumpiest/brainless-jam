@@ -232,8 +232,7 @@ func _die() -> void:
 		_explode(explode_fx.value, explode_fx.secondary_value)
 	remove_from_group("units")
 	
-	if _commander:
-		_commander.unregister(self)
+	clear_commander()
 	
 	if _selection_manager:
 		_selection_manager.deselect(self)
@@ -258,9 +257,18 @@ func move_to(target: Vector3) -> void:
 	_has_move_target = true
 
 
-func commander_registered(commander: Commander) -> void:
-	_commander = commander
+func clear_commander() -> void:
+	if _commander:
+		_commander.unregister(self)
+		
 	_steering_behaviours.clear()
+	_commander = null
+
+
+func commander_registered(commander: Commander) -> void:
+	clear_commander()
+
+	_commander = commander
 	if _commander:
 		_steering_behaviours.push_back(_commander.get_behaviour(SteeringBehaviour.BehaviourType.Separation))
 		_steering_behaviours.push_back(_commander.get_behaviour(SteeringBehaviour.BehaviourType.Avoidance))
